@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tailwind Dashboard Template</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <!-- ===== Header ===== -->
+  <header class="fixed top-0 inset-x-0 z-40 bg-white shadow-sm border-b">
+    <div class="flex items-center justify-between h-16 px-4">
+
+      <!-- Drawer toggle -->
+      <label for="drawer-toggle" class="p-2 rounded-md text-gray-600 cursor-pointer lg:hidden hover:bg-gray-100">
+        <i class="fas fa-bars text-xl"></i>
+      </label>
+
+      <!-- Dashboard title -->
+      <h1 class="font-semibold text-lg text-indigo-600">Dashboard</h1>
+
+      <!-- Profile Dropdown -->
+      <div class="relative group">
+        <button class="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 focus:outline-none">
+          <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+            <i class="fas fa-user text-indigo-600"></i>
+          </div>
+          <span class="hidden md:block font-medium text-gray-700">John Doe</span>
+          <i class="fas fa-chevron-down text-xs text-gray-500"></i>
+        </button>
+
+        <!-- Dropdown menu (on hover/focus) -->
+        <div
+          class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition"
+        >
+          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <i class="fas fa-user mr-2"></i>Profile
+          </a>
+          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <i class="fas fa-cog mr-2"></i>Settings
+          </a>
+          <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Drawer Logic ===== -->
+  <input type="checkbox" id="drawer-toggle" class="hidden peer" />
+
+  <!-- ===== Sidebar ===== -->
+  <aside
+    class="fixed top-0 left-0 z-30 w-64 h-full bg-white border-r shadow-md transform -translate-x-full peer-checked:translate-x-0 transition-transform duration-300 ease-in-out lg:translate-x-0"
+  >
+    <div class="flex items-center justify-center h-16 border-b">
+      <h1 class="text-xl font-bold text-indigo-600">Menu</h1>
+    </div>
+    <nav class="mt-6 space-y-1">
+      <a href="#" class="flex items-center px-6 py-2 text-indigo-600 bg-indigo-50 font-medium rounded-lg">
+        <i class="fas fa-home mr-3"></i>Dashboard
+      </a>
+      <a href="#" class="flex items-center px-6 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+        <i class="fas fa-shopping-bag mr-3"></i>Products
+      </a>
+      <a href="#" class="flex items-center px-6 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+        <i class="fas fa-users mr-3"></i>Customers
+      </a>
+      <a href="#" class="flex items-center px-6 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+        <i class="fas fa-chart-line mr-3"></i>Analytics
+      </a>
+      <a href="#" class="flex items-center px-6 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+        <i class="fas fa-cog mr-3"></i>Settings
+      </a>
+    </nav>
+  </aside>
+
+  <!-- ===== Overlay for Mobile ===== -->
+  <label
+    for="drawer-toggle"
+    class="fixed inset-0 bg-black bg-opacity-25 z-20 hidden peer-checked:block lg:hidden"
+  ></label>
+
+  <!-- ===== Main Content ===== -->
+  <main class="flex flex-col min-h-screen pt-20 pb-16 px-4 sm:px-6 lg:px-8 lg:ml-64">
+
+    <!-- Header Section -->
+    <div class="mb-6">
+      <h2 class="text-2xl font-bold text-gray-800">Product Management</h2>
+      <p class="text-gray-600">Manage your products and inventory efficiently</p>
+    </div>
+
+    <!-- Add Product -->
+    <div class="mb-6">
+      <button class="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+        <i class="fas fa-plus mr-2"></i>Add Product
+      </button>
+    </div>
+
+    <!-- Product Table -->
+    <div class="bg-white shadow rounded-lg overflow-hidden border">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 text-sm">
+          <thead class="bg-gray-50 text-gray-700 uppercase text-xs font-semibold">
+            <tr>
+              <th class="px-6 py-3 text-left">Product Name</th>
+              <th class="px-6 py-3 text-left">SKU/ID</th>
+              <th class="px-6 py-3 text-left">Price</th>
+              <th class="px-6 py-3 text-left">Status</th>
+              <th class="px-6 py-3 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4">
+                <div class="flex items-center">
+                  <div class="w-10 h-10 bg-indigo-100 flex items-center justify-center rounded-lg mr-4">
+                    <i class="fas fa-box text-indigo-600"></i>
+                  </div>
+                  <div>
+                    <div class="font-medium text-gray-900">Wireless Headphones</div>
+                    <div class="text-gray-500 text-sm">Electronics</div>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4">#SKU-001</td>
+              <td class="px-6 py-4">$129.99</td>
+              <td class="px-6 py-4">
+                <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-700">In Stock</span>
+              </td>
+              <td class="px-6 py-4 text-center">
+                <div class="flex justify-center gap-3 text-gray-500">
+                  <button class="hover:text-blue-600"><i class="fas fa-eye"></i></button>
+                  <button class="hover:text-indigo-600"><i class="fas fa-edit"></i></button>
+                  <button class="hover:text-red-600"><i class="fas fa-trash"></i></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-6 flex justify-between items-center text-sm">
+      <p class="text-gray-700">Showing <span class="font-semibold">1</span> to <span class="font-semibold">4</span> of <span class="font-semibold">12</span> results</p>
+      <div class="flex gap-2">
+        <button class="px-3 py-1 border rounded hover:bg-gray-100">Previous</button>
+        <button class="px-3 py-1 border rounded bg-indigo-600 text-white">1</button>
+        <button class="px-3 py-1 border rounded hover:bg-gray-100">2</button>
+        <button class="px-3 py-1 border rounded hover:bg-gray-100">3</button>
+        <button class="px-3 py-1 border rounded hover:bg-gray-100">Next</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="bg-white border-t py-4 text-center text-sm text-gray-600">
+    © 2025 Dashboard Template. All rights reserved.
+  </footer>
+</body>
+</html>

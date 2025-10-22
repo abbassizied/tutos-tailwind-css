@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms - Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Drawer Toggle Checkbox (Hidden) -->
+    <input type="checkbox" id="drawer-toggle" class="hidden peer">
+
+    <!-- Sidebar/Drawer -->
+    <div class="fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out peer-checked:translate-x-0 lg:translate-x-0">
+        <div class="flex items-center justify-center h-16 px-4 border-b">
+            <i class="fas fa-chart-line text-blue-500 text-xl"></i>
+            <span class="ml-3 text-lg font-bold text-gray-800">Dashboard</span>
+        </div>
+        <nav class="mt-6">
+            <div class="px-4 space-y-2">
+                <a href="#" class="flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-home"></i>
+                    <span class="ml-4 font-medium">Dashboard</span>
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="ml-4 font-medium">Products</span>
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-users"></i>
+                    <span class="ml-4 font-medium">Customers</span>
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 text-blue-700 bg-blue-50 rounded-lg border-r-4 border-blue-500">
+                    <i class="fas fa-edit text-blue-500"></i>
+                    <span class="ml-4 font-medium">Forms</span>
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-chart-bar"></i>
+                    <span class="ml-4 font-medium">Analytics</span>
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-cog"></i>
+                    <span class="ml-4 font-medium">Settings</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Overlay for Mobile -->
+    <label for="drawer-toggle" class="fixed inset-0 bg-black bg-opacity-25 z-30 hidden peer-checked:block lg:hidden"></label>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col lg:ml-64 min-h-screen">
+        <!-- Header -->
+        <header class="sticky top-0 z-20 bg-white shadow-sm border-b">
+            <div class="flex items-center justify-between h-16 px-4">
+                <!-- Drawer Toggle Button -->
+                <label for="drawer-toggle" class="p-2 rounded-md text-gray-600 cursor-pointer lg:hidden hover:bg-gray-100">
+                    <i class="fas fa-bars text-xl"></i>
+                </label>
+                
+                <!-- Dashboard Title (Hidden on Mobile) -->
+                <h1 class="text-lg font-semibold text-blue-600 hidden md:block">Forms</h1>
+                
+                <!-- Profile Dropdown -->
+                <div class="relative group">
+                    <button class="flex items-center space-x-2 text-gray-700 focus:outline-none">
+                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-user text-blue-600"></i>
+                        </div>
+                        <span class="font-medium hidden md:block">John Doe</span>
+                        <i class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    
+                    <!-- Dropdown Menu -->
+                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border">
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <i class="fas fa-user mr-2"></i>Profile
+                        </a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <i class="fas fa-cog mr-2"></i>Settings
+                        </a>
+                        <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 p-6 overflow-y-auto">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Form Examples</h2>
+                <p class="text-gray-600">Various form styles and input types for your application</p>
+            </div>
+
+            <!-- Two Column Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Left Column -->
+                <div class="space-y-6">
+                    <!-- Basic Information Form -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Basic Information</h3>
+                        <form class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="John">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Doe">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="john.doe@example.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                                <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="+1 (555) 123-4567">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="123 Main St">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="New York">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">ZIP Code</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="10001">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="">Select a country</option>
+                                    <option value="us">United States</option>
+                                    <option value="ca">Canada</option>
+                                    <option value="uk">United Kingdom</option>
+                                    <option value="au">Australia</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Account Settings Form -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Account Settings</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="johndoe">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
+                                <input type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+                                <input type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                                <input type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="two-factor" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                <label for="two-factor" class="ml-2 block text-sm text-gray-700">Enable two-factor authentication</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="email-notifications" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" checked>
+                                <label for="email-notifications" class="ml-2 block text-sm text-gray-700">Receive email notifications</label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="space-y-6">
+                    <!-- Payment Information Form -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Payment Information</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Cardholder Name</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="MM/YY">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">CVV</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="123">
+                                </div>
+                            </div>
+                            <div class="border-t pt-4">
+                                <h4 class="text-md font-medium text-gray-700 mb-2">Billing Address</h4>
+                                <div class="flex items-center mb-3">
+                                    <input type="radio" id="same-address" name="billing-address" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300" checked>
+                                    <label for="same-address" class="ml-2 block text-sm text-gray-700">Same as personal address</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="radio" id="different-address" name="billing-address" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                    <label for="different-address" class="ml-2 block text-sm text-gray-700">Use a different address</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Preferences Form -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Preferences</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Theme</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="light">Light</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="system">System Default</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Language</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="en">English</option>
+                                    <option value="es">Spanish</option>
+                                    <option value="fr">French</option>
+                                    <option value="de">German</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Time Zone</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="est">Eastern Time (ET)</option>
+                                    <option value="cst">Central Time (CT)</option>
+                                    <option value="mst">Mountain Time (MT)</option>
+                                    <option value="pst">Pacific Time (PT)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Date Format</label>
+                                <div class="flex space-x-4">
+                                    <div class="flex items-center">
+                                        <input type="radio" id="mm-dd-yyyy" name="date-format" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300" checked>
+                                        <label for="mm-dd-yyyy" class="ml-2 block text-sm text-gray-700">MM/DD/YYYY</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="radio" id="dd-mm-yyyy" name="date-format" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                        <label for="dd-mm-yyyy" class="ml-2 block text-sm text-gray-700">DD/MM/YYYY</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Notification Frequency</label>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-500">Less</span>
+                                    <input type="range" class="w-3/4 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" min="0" max="100">
+                                    <span class="text-sm text-gray-500">More</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- File Upload Form -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">File Upload</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Profile Picture</label>
+                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                    <div class="space-y-1 text-center">
+                                        <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl mx-auto"></i>
+                                        <div class="flex text-sm text-gray-600">
+                                            <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none">
+                                                <span>Upload a file</span>
+                                                <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                                            </label>
+                                            <p class="pl-1">or drag and drop</p>
+                                        </div>
+                                        <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Additional Documents</label>
+                                <input type="file" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" multiple>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Additional Notes</label>
+                                <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Any additional information..."></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="mt-6 flex justify-end space-x-3">
+                <button type="button" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Cancel
+                </button>
+                <button type="button" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Save Changes
+                </button>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white border-t py-4 px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <p class="text-sm text-gray-600">© 2023 Dashboard Template. All rights reserved.</p>
+                <div class="flex space-x-4 mt-2 md:mt-0">
+                    <a href="#" class="text-sm text-gray-600 hover:text-blue-600 transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-sm text-gray-600 hover:text-blue-600 transition-colors">Terms of Service</a>
+                    <a href="#" class="text-sm text-gray-600 hover:text-blue-600 transition-colors">Contact</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

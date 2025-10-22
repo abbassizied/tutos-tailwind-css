@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation - Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Custom styles for validation states */
+        .input-error {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+        
+        .input-success {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+        
+        .password-strength {
+            height: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .password-strength.weak {
+            background-color: #ef4444;
+            width: 25%;
+        }
+        
+        .password-strength.medium {
+            background-color: #f59e0b;
+            width: 50%;
+        }
+        
+        .password-strength.strong {
+            background-color: #10b981;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Drawer Toggle Checkbox (Hidden) -->
+    <input type="checkbox" id="drawer-toggle" class="hidden peer">
+
+    <!-- Sidebar/Drawer -->
+    <div class="fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out peer-checked:translate-x-0 lg:translate-x-0">
+        <div class="flex items-center justify-center h-16 px-4 border-b">
+            <i class="fas fa-chart-line text-blue-500 text-xl"></i>
+            <span class="ml-3 text-lg font-bold text-gray-800">Dashboard</span>
+        </div>
+        <nav class="mt-6">
+            <div class="px-4 space-y-2">
+                <a href="#" class="flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-home"></i>
+                    <span class="ml-4 font-medium">Dashboard</span>
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="ml-4 font-medium">Products</span>
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-users"></i>
+                    <span class="ml-4 font-medium">Customers</span>
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-edit"></i>
+                    <span class="ml-4 font-medium">Forms</span>
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 text-blue-700 bg-blue-50 rounded-lg border-r-4 border-blue-500">
+                    <i class="fas fa-check-circle text-blue-500"></i>
+                    <span class="ml-4 font-medium">Validation</span>
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-cog"></i>
+                    <span class="ml-4 font-medium">Settings</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Overlay for Mobile -->
+    <label for="drawer-toggle" class="fixed inset-0 bg-black bg-opacity-25 z-30 hidden peer-checked:block lg:hidden"></label>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col lg:ml-64 min-h-screen">
+        <!-- Header -->
+        <header class="sticky top-0 z-20 bg-white shadow-sm border-b">
+            <div class="flex items-center justify-between h-16 px-4">
+                <!-- Drawer Toggle Button -->
+                <label for="drawer-toggle" class="p-2 rounded-md text-gray-600 cursor-pointer lg:hidden hover:bg-gray-100">
+                    <i class="fas fa-bars text-xl"></i>
+                </label>
+                
+                <!-- Dashboard Title (Hidden on Mobile) -->
+                <h1 class="text-lg font-semibold text-blue-600 hidden md:block">Form Validation</h1>
+                
+                <!-- Profile Dropdown -->
+                <div class="relative group">
+                    <button class="flex items-center space-x-2 text-gray-700 focus:outline-none">
+                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-user text-blue-600"></i>
+                        </div>
+                        <span class="font-medium hidden md:block">John Doe</span>
+                        <i class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    
+                    <!-- Dropdown Menu -->
+                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border">
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <i class="fas fa-user mr-2"></i>Profile
+                        </a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <i class="fas fa-cog mr-2"></i>Settings
+                        </a>
+                        <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 p-6 overflow-y-auto">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Form Validation Examples</h2>
+                <p class="text-gray-600">Real-time validation with error messages and feedback</p>
+            </div>
+
+            <!-- Validation Demo Card -->
+            <div class="bg-white rounded-lg shadow p-6 mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Live Validation Demo</h3>
+                <p class="text-gray-600 mb-6">Try entering invalid data to see validation in action. Fields validate as you type.</p>
+                
+                <form id="validation-form" class="space-y-6">
+                    <!-- Personal Information Section -->
+                    <div>
+                        <h4 class="text-md font-medium text-gray-800 mb-4 border-b pb-2">Personal Information</h4>
+                        
+                        <!-- Name Field -->
+                        <div class="mb-4">
+                            <label for="full-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name <span class="text-red-500">*</span></label>
+                            <input 
+                                type="text" 
+                                id="full-name" 
+                                name="full-name" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                                placeholder="Enter your full name"
+                                required
+                                minlength="2"
+                            >
+                            <div id="name-error" class="text-red-600 text-sm mt-1 hidden">
+                                <i class="fas fa-exclamation-circle mr-1"></i>
+                                <span>Please enter a valid name (at least 2 characters)</span>
+                            </div>
+                            <div id="name-success" class="text-green-600 text-sm mt-1 hidden">
+                                <i class="fas fa-check-circle mr-1"></i>
+                                <span>Name looks good!</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Email Field -->
+                        <div class="mb-4">
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address <span class="text-red-500">*</span></label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                                placeholder="your.email@example.com"
+                                required
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                            >
+                            <div id="email-error" class="text-red-600 text-sm mt-1 hidden">
+                                <i class="fas fa-exclamation-circle mr-1"></i>
+                                <span>Please enter a valid email address</span>
+                            </div>
+                            <div id="email-success" class="text-green-600 text-sm mt-1 hidden">
+                                <i class="fas fa-check-circle mr-1"></i>
+                                <span>Email address is valid</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Phone Field -->
+                        <div class="mb-4">
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <input 
+                                type="tel" 
+                                id="phone" 
+                                name="phone" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                                placeholder="(123) 456-7890"
+                                pattern="\([0-9]{3}\) [0-9]{3}-[0-9]{4}"
+                            >
+                            <div id="phone-error" class="text-red-600 text-sm mt-1 hidden">
+                                <i class="fas fa-exclamation-circle mr-1"></i>
+                                <span>Please enter a valid phone number (format: (123) 456-7890)</span>
+                            </div>
+                            <div id="phone-success" class="text-green-600 text-sm mt-1 hidden">
+                                <i class="fas fa-check-circle mr-1"></i>
+                                <span>Phone number is valid</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Account Security Section -->
+                    <div>
+                        <h4 class="text-md font-medium text-gray-800 mb-4 border-b pb-2">Account Security</h4>
+                        
+                        <!-- Password Field -->
+                        <div class="mb-4">
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password <span class="text-red-500">*</span></label>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                                placeholder="Create a strong password"
+                                required
+                                minlength="8"
+                            >
+                            <!-- Password Strength Meter -->
+                            <div class="mt-2">
+                                <div class="flex justify-between text-xs text-gray-500 mb-1">
+                                    <span>Password Strength:</span>
+                                    <span id="strength-text">None</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-1.5">
+                                    <div id="password-strength" class="password-strength rounded-full"></div>
+                                </div>
+                            </div>
+                            <div id="password-error" class="text-red-600 text-sm mt-1 hidden">
+                                <i class="fas fa-exclamation-circle mr-1"></i>
+                                <span>Password must be at least 8 characters long</span>
+                            </div>
+                            <div id="password-success" class="text-green-600 text-sm mt-1 hidden">
+                                <i class="fas fa-check-circle mr-1"></i>
+                                <span>Password meets requirements</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Confirm Password Field -->
+                        <div class="mb-4">
+                            <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password <span class="text-red-500">*</span></label>
+                            <input 
+                                type="password" 
+                                id="confirm-password" 
+                                name="confirm-password" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                                placeholder="Confirm your password"
+                                required
+                            >
+                            <div id="confirm-password-error" class="text-red-600 text-sm mt-1 hidden">
+                                <i class="fas fa-exclamation-circle mr-1"></i>
+                                <span>Passwords do not match</span>
+                            </div>
+                            <div id="confirm-password-success" class="text-green-600 text-sm mt-1 hidden">
+                                <i class="fas fa-check-circle mr-1"></i>
+                                <span>Passwords match</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Information Section -->
+                    <div>
+                        <h4 class="text-md font-medium text-gray-800 mb-4 border-b pb-2">Additional Information</h4>
+                        
+                        <!-- Age Field -->
+                        <div class="mb-4">
+                            <label for="age" class="block text-sm font-medium text-gray-700 mb-1">Age <span class="text-red-500">*</span></label>
+                            <input 
+                                type="number" 
+                                id="age" 
+                                name="age" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                                placeholder="Enter your age"
+                                required
+                                min="18"
+                                max="120"
+                            >
+                            <div id="age-error" class="text-red-600 text-sm mt-1 hidden">
+                                <i class="fas fa-exclamation-circle mr-1"></i>
+                                <span>Age must be between 18 and 120</span>
+                            </div>
+                            <div id="age-success" class="text-green-600 text-sm mt-1 hidden">
+                                <i class="fas fa-check-circle mr-1"></i>
+                                <span>Age is valid</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Website Field -->
+                        <div class="mb-4">
+                            <label for="website" class="block text-sm font-medium text-gray-700 mb-1">Website</label>
+                            <input 
+                                type="url" 
+                                id="website" 
+                                name="website" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                                placeholder="https://example.com"
+                            >
+                            <div id="website-error" class="text-red-600 text-sm mt-1 hidden">
+                                <i class="fas fa-exclamation-circle mr-1"></i>
+                                <span>Please enter a valid URL (include http:// or https://)</span>
+                            </div>
+                            <div id="website-success" class="text-green-600 text-sm mt-1 hidden">
+                                <i class="fas fa-check-circle mr-1"></i>
+                                <span>URL is valid</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Agreement Checkbox -->
+                        <div class="mb-4">
+                            <div class="flex items-start">
+                                <input 
+                                    type="checkbox" 
+                                    id="agreement" 
+                                    name="agreement" 
+                                    class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mt-1"
+                                    required
+                                >
+                                <label for="agreement" class="ml-2 block text-sm text-gray-700">
+                                    I agree to the <a href="#" class="text-blue-600 hover:underline">Terms of Service</a> and <a href="#" class="text-blue-600 hover:underline">Privacy Policy</a> <span class="text-red-500">*</span>
+                                </label>
+                            </div>
+                            <div id="agreement-error" class="text-red-600 text-sm mt-1 hidden">
+                                <i class="fas fa-exclamation-circle mr-1"></i>
+                                <span>You must agree to the terms and conditions</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Form Actions -->
+                    <div class="flex justify-end space-x-3 pt-4 border-t">
+                        <button type="reset" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Reset Form
+                        </button>
+                        <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Submit Form
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Validation Status Card -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Validation Status</h3>
+                <div id="validation-status" class="p-4 rounded-md bg-gray-100 text-gray-700">
+                    <p>Form validation status will appear here after submission attempt.</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white border-t py-4 px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <p class="text-sm text-gray-600">© 2023 Dashboard Template. All rights reserved.</p>
+                <div class="flex space-x-4 mt-2 md:mt-0">
+                    <a href="#" class="text-sm text-gray-600 hover:text-blue-600 transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-sm text-gray-600 hover:text-blue-600 transition-colors">Terms of Service</a>
+                    <a href="#" class="text-sm text-gray-600 hover:text-blue-600 transition-colors">Contact</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript for Form Validation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('validation-form');
+            const validationStatus = document.getElementById('validation-status');
+            
+            // Get all input elements
+            const inputs = {
+                name: document.getElementById('full-name'),
+                email: document.getElementById('email'),
+                phone: document.getElementById('phone'),
+                password: document.getElementById('password'),
+                confirmPassword: document.getElementById('confirm-password'),
+                age: document.getElementById('age'),
+                website: document.getElementById('website'),
+                agreement: document.getElementById('agreement')
+            };
+            
+            // Real-time validation for each input
+            Object.keys(inputs).forEach(key => {
+                const input = inputs[key];
+                if (input) {
+                    input.addEventListener('blur', validateField);
+                    input.addEventListener('input', validateField);
+                    
+                    // Special handling for password confirmation
+                    if (key === 'password') {
+                        input.addEventListener('input', validatePasswordStrength);
+                        input.addEventListener('input', () => {
+                            if (inputs.confirmPassword.value) {
+                                validateField.call(inputs.confirmPassword);
+                            }
+                        });
+                    }
+                    
+                    if (key === 'confirmPassword') {
+                        input.addEventListener('input', validateField);
+                    }
+                }
+            });
+            
+            // Form submission handler
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate all fields
+                let isValid = true;
+                Object.keys(inputs).forEach(key => {
+                    if (!validateField.call(inputs[key])) {
+                        isValid = false;
+                    }
+                });
+                
+                // Show validation status
+                if (isValid) {
+                    validationStatus.innerHTML = `
+                        <div class="flex items-center text-green-700 bg-green-50 p-4 rounded-md">
+                            <i class="fas fa-check-circle text-xl mr-3"></i>
+                            <div>
+                                <h4 class="font-medium">Form submitted successfully!</h4>
+                                <p class="text-sm mt-1">All fields passed validation.</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    validationStatus.innerHTML = `
+                        <div class="flex items-center text-red-700 bg-red-50 p-4 rounded-md">
+                            <i class="fas fa-exclamation-triangle text-xl mr-3"></i>
+                            <div>
+                                <h4 class="font-medium">Form validation failed</h4>
+                                <p class="text-sm mt-1">Please fix the errors highlighted above.</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Scroll to first error
+                    const firstError = document.querySelector('.input-error');
+                    if (firstError) {
+                        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            });
+            
+            // Form reset handler
+            form.addEventListener('reset', function() {
+                // Clear all validation states
+                Object.keys(inputs).forEach(key => {
+                    const input = inputs[key];
+                    if (input) {
+                        input.classList.remove('input-error', 'input-success');
+                        
+                        // Hide error and success messages
+                        const errorElement = document.getElementById(`${input.id}-error`);
+                        const successElement = document.getElementById(`${input.id}-success`);
+                        
+                        if (errorElement) errorElement.classList.add('hidden');
+                        if (successElement) successElement.classList.add('hidden');
+                    }
+                });
+                
+                // Reset password strength
+                const strengthMeter = document.getElementById('password-strength');
+                const strengthText = document.getElementById('strength-text');
+                if (strengthMeter) {
+                    strengthMeter.className = 'password-strength';
+                    strengthMeter.style.width = '0%';
+                }
+                if (strengthText) {
+                    strengthText.textContent = 'None';
+                }
+                
+                // Reset validation status
+                validationStatus.innerHTML = '<p>Form validation status will appear here after submission attempt.</p>';
+            });
+            
+            // Field validation function
+            function validateField() {
+                const input = this;
+                const value = input.value.trim();
+                const errorElement = document.getElementById(`${input.id}-error`);
+                const successElement = document.getElementById(`${input.id}-success`);
+                
+                // Reset classes
+                input.classList.remove('input-error', 'input-success');
+                if (errorElement) errorElement.classList.add('hidden');
+                if (successElement) successElement.classList.add('hidden');
+                
+                // Skip validation for empty optional fields
+                if (!input.required && value === '') {
+                    return true;
+                }
+                
+                let isValid = true;
+                let errorMessage = '';
+                
+                // Field-specific validation
+                switch(input.id) {
+                    case 'full-name':
+                        if (value.length < 2) {
+                            isValid = false;
+                            errorMessage = 'Please enter a valid name (at least 2 characters)';
+                        }
+                        break;
+                    case 'email':
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(value)) {
+                            isValid = false;
+                            errorMessage = 'Please enter a valid email address';
+                        }
+                        break;
+                    case 'phone':
+                        if (value && !/^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/.test(value)) {
+                            isValid = false;
+                            errorMessage = 'Please enter a valid phone number (format: (123) 456-7890)';
+                        }
+                        break;
+                    case 'password':
+                        if (value.length < 8) {
+                            isValid = false;
+                            errorMessage = 'Password must be at least 8 characters long';
+                        }
+                        break;
+                    case 'confirm-password':
+                        if (value !== inputs.password.value) {
+                            isValid = false;
+                            errorMessage = 'Passwords do not match';
+                        }
+                        break;
+                    case 'age':
+                        const age = parseInt(value);
+                        if (isNaN(age) || age < 18 || age > 120) {
+                            isValid = false;
+                            errorMessage = 'Age must be between 18 and 120';
+                        }
+                        break;
+                    case 'website':
+                        if (value && !/^https?:\/\/.+\..+/.test(value)) {
+                            isValid = false;
+                            errorMessage = 'Please enter a valid URL (include http:// or https://)';
+                        }
+                        break;
+                    case 'agreement':
+                        if (!input.checked) {
+                            isValid = false;
+                            errorMessage = 'You must agree to the terms and conditions';
+                        }
+                        break;
+                }
+                
+                // Update UI based on validation result
+                if (!isValid && value !== '') {
+                    input.classList.add('input-error');
+                    if (errorElement) {
+                        errorElement.classList.remove('hidden');
+                        errorElement.querySelector('span').textContent = errorMessage;
+                    }
+                } else if (isValid && value !== '') {
+                    input.classList.add('input-success');
+                    if (successElement) successElement.classList.remove('hidden');
+                }
+                
+                return isValid;
+            }
+            
+            // Password strength validation
+            function validatePasswordStrength() {
+                const password = this.value;
+                const strengthMeter = document.getElementById('password-strength');
+                const strengthText = document.getElementById('strength-text');
+                
+                let strength = 0;
+                
+                // Length check
+                if (password.length >= 8) strength += 1;
+                
+                // Contains lowercase
+                if (/[a-z]/.test(password)) strength += 1;
+                
+                // Contains uppercase
+                if (/[A-Z]/.test(password)) strength += 1;
+                
+                // Contains numbers
+                if (/[0-9]/.test(password)) strength += 1;
+                
+                // Contains special characters
+                if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+                
+                // Update strength meter
+                if (strengthMeter && strengthText) {
+                    if (password.length === 0) {
+                        strengthMeter.className = 'password-strength';
+                        strengthMeter.style.width = '0%';
+                        strengthText.textContent = 'None';
+                    } else if (strength <= 2) {
+                        strengthMeter.className = 'password-strength weak';
+                        strengthText.textContent = 'Weak';
+                    } else if (strength <= 4) {
+                        strengthMeter.className = 'password-strength medium';
+                        strengthText.textContent = 'Medium';
+                    } else {
+                        strengthMeter.className = 'password-strength strong';
+                        strengthText.textContent = 'Strong';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
